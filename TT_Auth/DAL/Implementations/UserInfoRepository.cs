@@ -1,13 +1,8 @@
 ﻿using DAL.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Text;
-using TT_Auth.Models.Entity;
 using TT_Auth.Data;
+using TT_Auth.Models.Entity;
 
 namespace DAL.Implementations
 {
@@ -23,9 +18,9 @@ namespace DAL.Implementations
         {
 
             UserInfo user = _data.UserInfo.First(u => u.Email == email);
-             VerifyPassword(user, password);
+            VerifyPassword(user, password);
             return user;
-            
+
 
 
         }
@@ -52,7 +47,7 @@ namespace DAL.Implementations
 
         public Task<bool> Create(UserInfo entity)
         {
-                throw new NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public bool Update(UserInfo userInfo)

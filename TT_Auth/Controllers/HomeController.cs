@@ -15,6 +15,7 @@ namespace TT_Auth.Controllers
 
         public IActionResult Index()
         {
+            
             return View();
         }
 

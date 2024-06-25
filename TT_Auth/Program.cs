@@ -1,6 +1,6 @@
+using TT_Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using TT_Auth;
 using TT_Auth.Data;
 using TT_Auth.Models.Entity;
 

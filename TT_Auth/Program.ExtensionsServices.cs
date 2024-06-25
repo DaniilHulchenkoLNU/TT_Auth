@@ -2,7 +2,6 @@
 using DAL.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using TT_Auth.Data;
 using TT_Auth.Models.Entity;
 
@@ -24,6 +23,8 @@ namespace TT_Auth
             builder.Services.AddDefaultIdentity<UserInfo>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            builder.Services.AddScoped<IUserClaimsPrincipalFactory<UserInfo>, CustomUserClaimsPrincipalFactory>();
+
 
             //builder.Services.AddIdentity<UserInfo, IdentityRole>(options =>
             //{
@@ -32,7 +33,11 @@ namespace TT_Auth
             //    .AddEntityFrameworkStores<ApplicationDbContext>()
             //    .AddDefaultTokenProviders();
 
-            builder.Services.AddAuthorization();
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireRoleAdmin1", policy =>
+                    policy.RequireClaim("RoleId", "1"));
+            });
 
 
             builder.Services.AddScoped(typeof(iBaseRepository<>), typeof(BaseRepository<>));

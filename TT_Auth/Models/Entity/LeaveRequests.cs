@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TT_Auth.Models.Entity
 {
     [Table("LeaveRequests")]
-    public class LeaveRequests: DbBase
+    public class LeaveRequests : DbBase
     {
 
 

@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 //using Microsoft.AspNet.Identity.EntityFramework;
 
 
 namespace TT_Auth.Models.Entity
 {
     [Table("Employees")]
-    public class Employee: DbBase
+    public class Employee : DbBase
     {
         public Employee()
         {
@@ -21,6 +15,7 @@ namespace TT_Auth.Models.Entity
             Status = "Active";
             OutOfOfficeBalance = 0;
             //Role = (await _RoleRepository.GetAll()).FirstOrDefault(r => r.RoleName == "User");
+            //RoleId = 2;
             Photo = "default.jpg";
         }
 
@@ -46,11 +41,11 @@ namespace TT_Auth.Models.Entity
 
         public string Photo { get; set; }  // Optional field for photo
 
-
-        public int RoleId { get; set; }
-        [Required]
-        [ForeignKey("RoleId")]
-        public virtual Role Role { get; set; }
+        //[Required]
+        //public int RoleId { get; set; }
+        
+        //[ForeignKey("RoleId")]
+        //public virtual Role Role { get; set; }
 
         [ForeignKey(nameof(PeoplePartnerId))]
         public virtual Employee PeoplePartner { get; set; }

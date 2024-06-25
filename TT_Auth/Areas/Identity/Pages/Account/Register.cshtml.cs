@@ -120,11 +120,8 @@ namespace TT_Auth.Areas.Identity.Pages.Account
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
-                user.Employee =new Models.Entity.Employee()
-                {
-                    RoleId = 2,
+                user.Employee = new Models.Entity.Employee(); // !!!
 
-                };
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
@@ -171,7 +168,7 @@ namespace TT_Auth.Areas.Identity.Pages.Account
 
                 var user = Activator.CreateInstance<UserInfo>();
 
-               
+
                 return user;
             }
             catch

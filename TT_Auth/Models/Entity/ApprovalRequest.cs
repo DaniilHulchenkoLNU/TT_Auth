@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TT_Auth.Models.Entity
 {
     [Table("ApprovalRequests")]
-    public class ApprovalRequest: DbBase
+    public class ApprovalRequest : DbBase
     {
 
         [Required]
@@ -21,9 +16,9 @@ namespace TT_Auth.Models.Entity
 
         [Required]
         [DefaultValue("New")]
-        public string Status { get; set; }  
+        public string Status { get; set; }
 
-        public string Comment { get; set; }   
+        public string Comment { get; set; }
 
         [ForeignKey("ApproverId")]
         public virtual Employee Approver { get; set; }
