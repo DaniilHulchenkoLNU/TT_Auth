@@ -1,11 +1,12 @@
 ﻿@using TT_Auth.Models.ENUMS
-@model IEnumerable<TT_Auth.Models.Entity.Employee>
+@model IEnumerable<TT_Auth.Models.Entity.LeaveRequests>
 
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
+
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -28,28 +29,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.UserInfo)
+                @Html.DisplayNameFor(model => model.AbsenceReason)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Subdivision)
+                @Html.DisplayNameFor(model => model.StartDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Position)
+                @Html.DisplayNameFor(model => model.EndDate)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OutOfOfficeBalance)
+                @Html.DisplayNameFor(model => model.Comment)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Photo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserInfo.Role)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PeoplePartner)
+                @Html.DisplayNameFor(model => model.Employee)
             </th>
             <th></th>
         </tr>
@@ -58,28 +53,22 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.UserInfo.Id)
+                @Html.DisplayFor(modelItem => item.AbsenceReason)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Subdivision)
+                @Html.DisplayFor(modelItem => item.StartDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Position)
+                @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.OutOfOfficeBalance)
+                @Html.DisplayFor(modelItem => item.Comment)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Photo)
-            </td>
-             <td>
-                 @Html.DisplayFor(modelItem => item.UserInfo.Role.Description)
-             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PeoplePartner.Position)
+                @Html.DisplayFor(modelItem => item.Employee.Position)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

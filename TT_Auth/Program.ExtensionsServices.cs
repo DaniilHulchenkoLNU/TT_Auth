@@ -15,7 +15,8 @@ namespace TT_Auth
         {
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseLazyLoadingProxies().
+                    UseSqlServer(connectionString));
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -36,7 +37,7 @@ namespace TT_Auth
             builder.Services.AddAuthorization(options =>
             {
                 options.AddPolicy("RequireRoleAdmin1", policy =>
-                    policy.RequireClaim("RoleId", "1"));
+                                  policy.RequireClaim("RoleId", "1"));
             });
 
 

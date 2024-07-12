@@ -6,8 +6,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using TT_Auth.Data;
 using TT_Auth.Models.Entity;
+using TT_Auth.Models.ENUMS;
 
 namespace TT_Auth.Controllers
 {
@@ -22,15 +24,31 @@ namespace TT_Auth.Controllers
             _context = context;
         }
 
+
+
         // GET: Employees
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(SortOptions? sortOption = null)
         {
-            var applicationDbContext = _context.Employees.Include(e => e.PeoplePartner)/*.Include(e => e.Role)*/.Include(e => e.UserInfo);
+            IQueryable<Employee> applicationDbContext = _context.Employees
+                .Include(e => e.PeoplePartner)
+                .Include(e => e.UserInfo.Role)
+                .Include(e => e.UserInfo);
+
+            switch (sortOption)
+            {
+                case SortOptions.ByRole:
+                    applicationDbContext = applicationDbContext.OrderBy(e => e.UserInfo.Role.RoleName);
+                    break;
+                default:
+                    applicationDbContext = applicationDbContext.OrderBy(e => e.UserInfo.UserName);
+                    break;
+            }
+
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Employees/Details/5
-        public async Task<IActionResult> Details(int? id)
+    // GET: Employees/Details/5
+    public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -39,7 +57,7 @@ namespace TT_Auth.Controllers
 
             var employee = await _context.Employees
                 .Include(e => e.PeoplePartner)
-                //.Include(e => e.Role)
+                .Include(e => e.UserInfo.Role)
                 .Include(e => e.UserInfo)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (employee == null)
@@ -73,7 +91,7 @@ namespace TT_Auth.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["PeoplePartnerId"] = new SelectList(_context.Employees, "Id", "Position", employee.PeoplePartnerId);
-            //ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Description", employee.RoleId);
+            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Description", employee.UserInfo.RoleId);
             ViewData["UserInfoId"] = new SelectList(_context.UserInfo, "Id", "Id", employee.UserInfoId);
             return View(employee);
         }
@@ -92,7 +110,7 @@ namespace TT_Auth.Controllers
                 return NotFound();
             }
             ViewData["PeoplePartnerId"] = new SelectList(_context.Employees, "Id", "Position", employee.PeoplePartnerId);
-            //ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Description", employee.RoleId);
+            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Description", employee.UserInfo.RoleId);
             ViewData["UserInfoId"] = new SelectList(_context.UserInfo, "Id", "Id", employee.UserInfoId);
             return View(employee);
         }
@@ -130,7 +148,7 @@ namespace TT_Auth.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["PeoplePartnerId"] = new SelectList(_context.Employees, "Id", "Position", employee.PeoplePartnerId);
-            //ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Description", employee.RoleId);
+            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Description", employee.UserInfo.RoleId);
             ViewData["UserInfoId"] = new SelectList(_context.UserInfo, "Id", "Id", employee.UserInfoId);
             return View(employee);
         }
@@ -145,7 +163,7 @@ namespace TT_Auth.Controllers
 
             var employee = await _context.Employees
                 .Include(e => e.PeoplePartner)
-                //.Include(e => e.Role)
+                .Include(e => e.UserInfo.Role)
                 .Include(e => e.UserInfo)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (employee == null)
